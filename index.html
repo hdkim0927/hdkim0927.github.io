@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Name — POSTECH</title>
+<meta name="description" content="Personal academic homepage">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf8;
+    --surface: #ffffff;
+    --text: #1c1b19;
+    --muted: #6b6862;
+    --line: #e7e4de;
+    --accent: #c8102e;           /* POSTECH red */
+    --accent-soft: #fbeaec;
+    --chip: #f3f1ec;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141413; --surface: #1c1b1a; --text: #ecebe7; --muted: #9c9891;
+      --line: #2e2d2a; --accent: #ff5a6e; --accent-soft: #3a1c21; --chip: #262523;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141413; --surface: #1c1b1a; --text: #ecebe7; --muted: #9c9891;
+    --line: #2e2d2a; --accent: #ff5a6e; --accent-soft: #3a1c21; --chip: #262523;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.7 "Inter", "Noto Sans KR", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px; }
+
+  /* nav */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 12px; }
+  nav .brand { font-weight: 700; color: var(--text); white-space: nowrap; }
+  nav ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; overflow-x: auto; }
+  nav ul a { color: var(--muted); font-size: 14px; font-weight: 500; }
+  nav ul a:hover { color: var(--text); text-decoration: none; }
+  .theme-btn {
+    border: 1px solid var(--line); background: var(--surface); color: var(--text);
+    border-radius: 8px; width: 34px; height: 34px; cursor: pointer; flex: none;
+  }
+
+  /* hero */
+  header.hero { padding: 64px 0 40px; display: grid; grid-template-columns: 168px 1fr; gap: 36px; align-items: center; }
+  .avatar {
+    width: 168px; height: 168px; border-radius: 50%; object-fit: cover;
+    background: var(--accent-soft); color: var(--accent);
+    display: grid; place-items: center; font-size: 56px; font-weight: 700;
+    border: 4px solid var(--surface); box-shadow: 0 0 0 1px var(--line);
+  }
+  .hero h1 { margin: 0; font-size: 36px; line-height: 1.2; letter-spacing: -0.02em; }
+  .hero .name-ko { color: var(--muted); font-weight: 500; font-size: 20px; margin-left: 6px; }
+  .hero .role { margin: 8px 0 0; font-size: 17px; }
+  .hero .affil { margin: 2px 0 0; color: var(--muted); }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .links a {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px;
+    background: var(--surface); color: var(--text); font-size: 14px; font-weight: 500;
+  }
+  .links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .links svg { width: 15px; height: 15px; }
+
+  /* sections */
+  section { padding: 36px 0; border-top: 1px solid var(--line); scroll-margin-top: 56px; }
+  section h2 { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin: 0 0 18px; }
+  .about p { margin: 0 0 12px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--chip); padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 500; }
+
+  .news li { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 6px 0; }
+  .news time { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+  ul.plain { list-style: none; margin: 0; padding: 0; }
+
+  .timeline li { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 10px 0; }
+  .timeline .t { font-weight: 600; }
+  .timeline .s { color: var(--muted); font-size: 15px; grid-column: 1; }
+  .timeline .d { color: var(--muted); font-size: 14px; white-space: nowrap; grid-row: 1; grid-column: 2; }
+
+  .pubs li { padding: 12px 0; border-bottom: 1px dashed var(--line); }
+  .pubs li:last-child { border-bottom: 0; }
+  .pubs .title { font-weight: 600; }
+  .pubs .authors { font-size: 15px; }
+  .pubs .authors b { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+  .pubs .venue { color: var(--muted); font-size: 14px; font-style: italic; }
+  .pubs .tag { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); margin-right: 6px; font-style: normal; }
+  .pubs .title a { color: var(--text); }
+  .pubs .title a:hover { color: var(--accent); }
+  .pubs .tag { margin: 0 0 0 6px; }
+  .pub-group { font-size: 17px; margin: 28px 0 4px; }
+  .pub-group:first-of-type { margin-top: 0; }
+  .pub-group span { font-size: 13px; font-weight: 600; color: var(--muted); background: var(--chip); padding: 1px 8px; border-radius: 6px; margin-left: 4px; }
+  img.avatar { object-position: center 20%; }
+
+  .projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+  .card h3 { margin: 0 0 6px; font-size: 16px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+
+  @media (max-width: 640px) {
+    header.hero { grid-template-columns: 1fr; text-align: center; padding-top: 40px; gap: 20px; }
+    .avatar { margin: 0 auto; width: 128px; height: 128px; font-size: 44px; }
+    .hero h1 { font-size: 28px; }
+    .hero .name-ko { display: block; margin: 4px 0 0; }
+    .links { justify-content: center; }
+    nav ul { display: none; }
+    .news li { grid-template-columns: 1fr; gap: 0; }
+    .timeline li { grid-template-columns: 1fr; }
+    .timeline .d { grid-row: auto; grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<script>
+/* ===================================================================
+   ✏️  여기만 수정하면 됩니다. (Edit only this block)
+   - 값이 빈 문자열("")이거나 빈 배열([])이면 해당 항목/섹션은 자동으로 숨겨집니다.
+   - photo: 같은 폴더에 사진(예: photo.jpg)을 넣고 "photo.jpg"로 지정
+   =================================================================== */
+const PROFILE = {
+  name: "Hyundong Kim",
+  nameKo: "김현동",
+  role: "Ph.D. Student",
+  affiliation: "Intelligent Radar Signal Processing Lab (IRAS), Dept. of Electrical Engineering, POSTECH",
+  photo: "photo.webp",
+  email: "hdkim927@postech.ac.kr",
+  links: {
+    lab: "https://iras.postech.ac.kr/",
+    orcid: "https://orcid.org/0009-0002-8398-3868",
+    github: "",                   // e.g. "https://github.com/username"
+    scholar: "",                  // Google Scholar URL
+    linkedin: "",
+    cv: "",                       // e.g. "cv.pdf"
+  },
+
+  about: [
+    "I am a Ph.D. student in the IRAS Lab at POSTECH, advised by Prof. Kyung-Tae Kim. My research focuses on radar signal processing, electronic warfare systems, and ISAR imaging — in particular direction-of-arrival (DOA) and elevation-angle estimation for low-altitude emitters in maritime EW environments, and bistatic FMCW SAR/ISAR imaging.",
+  ],
+
+  interests: [
+    "Radar Signal Processing", "Electronic Warfare Systems", "ISAR Imaging",
+    "DOA / Elevation Angle Estimation", "Bistatic FMCW SAR",
+  ],
+
+  news: [
+    // { date: "2026.10", text: "..." },
+  ],
+
+  education: [
+    { title: "Ph.D. in Electrical Engineering", sub: "POSTECH, Pohang, Korea · Advisor: Prof. Kyung-Tae Kim", date: "Mar. 2025 – Present" },
+    { title: "M.S. in Electrical Engineering", sub: "POSTECH, Pohang, Korea · Advisor: Prof. Kyung-Tae Kim", date: "Feb. 2023" },
+    { title: "B.S. in Electrical Engineering", sub: "POSTECH, Pohang, Korea", date: "Feb. 2021" },
+  ],
+
+  experience: [
+    // { title: "Research Intern", sub: "Company / Lab", date: "20XX" },
+  ],
+
+  // 내 이름 표기 — 저자 목록에서 굵게 표시됩니다.
+  me: "H.-D. Kim",
+
+  // Source: https://iras.postech.ac.kr/publications/
+  publications: [
+    {
+      group: "International Journal",
+      items: [
+        { authors: "G. Lee, S.-R. Park, H.-D. Kim, S.-H. Kim, N.-H. Jeong, K.-T. Kim",
+          title: "Formation-Dependent Cardinality Concealment of Target Swarms in Multifunction Radar",
+          venue: "Sensors, vol. 26, no. 20, pp. 6644, Oct. 2026", link: "https://doi.org/10.3390/s26206644" },
+        { authors: "M.-G. Cho, I.-H. Lee, H.-D. Kim, O.-T. Jang, K.-T. Kim",
+          title: "Deep Learning-Based Super-Resolution of SAR Object Images via Multi-Resolution Data Augmentation",
+          venue: "IEEE Transactions on Geoscience and Remote Sensing, vol. 64, Art. no. 5210217, May 2026", link: "https://doi.org/10.1109/tgrs.2026.3702643" },
+        { authors: "I.-H. Lee, M.-G. Cho, H.-D. Kim, K.-T. Kim",
+          title: "Efficient Compressed Sensing-Based Backprojection Approach for Small Drone-Borne W-Band SAR Imaging",
+          venue: "Remote Sensing, vol. 18, Art. no. 1369, Apr. 2026", link: "https://doi.org/10.3390/rs18091369" },
+        { authors: "I.-H. Lee, M.-G. Cho, H.-D. Kim, K.-T. Kim",
+          title: "High-Resolution ISAR Imaging of Highly Maneuvering Targets in 3D Rotational Motion via Frame Selection and Sparse Aperture Imaging",
+          venue: "IEEE Sensors Journal, vol. 26, pp. 8645-8659, Mar. 2026", link: "https://doi.org/10.1109/jsen.2026.3657779" },
+      ],
+    },
+    {
+      group: "Domestic Journal",
+      items: [
+        { authors: "H.-D. Kim, H.-L. Lee, H.-S. Moon, M.-S. Lee, Y.-G. Hong, H.-G. Kim, K.-T. Kim",
+          title: "Angle Estimation of Low-Elevation Signal Source Using LFM Signals with DUCA ST-MUSIC in Maritime EW Environments",
+          venue: "The Journal of Korean Institute of Electromagnetic Engineering and Science, vol. 37, no. 5, May 2026", link: "https://doi.org/10.5515/kjkiees.2026.37.5.515" },
+        { authors: "H.-L. Lee, H.-D. Kim, H.-S. Moon, M.-S. Lee, Y.-G. Hong, I.-H. Do, K.-T. Kim",
+          title: "DOA Estimation Using a Double-Layer Uniform Circular Array in Maritime Electronic Warfare Environments",
+          venue: "The Journal of Korean Institute of Electromagnetic Engineering and Science, vol. 37, no. 5, May 2026", link: "https://doi.org/10.5515/kjkiees.2026.37.5.502" },
+        { authors: "M.-G. Cho, I.-H. Lee, H.-D. Kim, H.-S. Shin, J.-W. Ok, M.-Y. Back, E.-N. You, K.-T. Kim",
+          title: "PSF Distortion Correction for Multistatic FMCW SAR Imaging Using Geometry-Aware Network",
+          venue: "The Journal of Korean Institute of Electromagnetic Engineering and Science, vol. 37, no. 5, May 2026", link: "https://doi.org/10.5515/kjkiees.2026.37.5.462" },
+        { authors: "H.-D. Kim, I.-H. Lee, M.-G. Cho, H.-S. Shin, J.-W. Ok, M.-Y. Back, E.-N. You, K.-T. Kim",
+          title: "Study on Range Resolution Improvement for Bistatic FMCW SAR",
+          venue: "The Journal of Korean Institute of Electromagnetic Engineering and Science, vol. 36, no. 7, Jul. 2025", link: "https://doi.org/10.5515/kjkiees.2025.36.7.696" },
+        { authors: "H.-D. Kim, N.-W. Choi, S.-S. Kim, S.-C. Jeon, K.-T. Kim, I.-O. Choi",
+          title: "Efficient Estimation of Elevation Angle for Low-Altitude Maneuvering Target Using Electronic Warfare Equipment in Sea Surface Environment",
+          venue: "The Journal of Korean Institute of Electromagnetic Engineering and Science, vol. 35, no. 8, Aug. 2024", link: "https://doi.org/10.5515/kjkiees.2024.35.8.656" },
+        { authors: "I.-H. Lee, M.-G. Cho, H.-D. Kim, H.-S. Shin, J.-W. Ok, M.-Y. Baek, E.-N. Yoo, K.-T. Kim",
+          title: "A Study on the Bi-Static FMCW Radar System Configuration and ISAR Imaging Via Master-Slave Structure",
+          venue: "The Journal of Korean Institute of Electromagnetic Engineering and Science, vol. 35, no. 5, May 2024", link: "https://doi.org/10.5515/kjkiees.2024.35.5.394" },
+      ],
+    },
+    {
+      group: "Domestic Conference",
+      items: [
+        { authors: "H.-D. Kim, K.-T. Kim",
+          title: "Elevation Angle Estimation for Low-Altitude Maritime Emitters Using a ULA Structure",
+          venue: "Korea Aerospace Society Fall Conference, Goseong, Nov. 2025" },
+        { authors: "H.-D. Kim, I.-H. Lee, M.-G. Cho, S.-H. Kim, K.-T. Kim",
+          title: "Optimization Techniques for Improving ARI Performance of Bistatic FMCW SAR",
+          venue: "KIEES Summer Conference, Pyeongchang, Aug. 2025" },
+        { authors: "M.-G. Cho, I.-H. Lee, H.-D. Kim, O.-T. Jang, K.-T. Kim",
+          title: "Scatterer-Aware Module-Based SAR Image Super-Resolution Network",
+          venue: "KIEES Summer Conference, Pyeongchang, Aug. 2025", award: "Excellent Paper Award" },
+        { authors: "H.-D. Kim, I.-H. Lee, M.-G. Cho, H.-S. Shin, J.-W. Ok, M.-Y. Baek, E.-N. Yoo, K.-T. Kim",
+          title: "A Study on Relaxing the Constraints of Bistatic SAR Range Resolution Enhancement Using STFT",
+          venue: "KIEES Winter Conference, Jeju, Feb. 2025" },
+        { authors: "M.-G. Cho, I.-H. Lee, H.-D. Kim, H.-S. Shin, J.-W. Ok, M.-Y. Baek, E.-N. Yoo, K.-T. Kim",
+          title: "Resolution and Image Quality Enhancement of Drone-Based Bistatic FMCW SAR Using RRI-Multilook Integration",
+          venue: "KIEES Winter Conference, Jeju, Feb. 2025" },
+        { authors: "I.-H. Lee, M.-G. Cho, H.-D. Kim, K.-T. Kim",
+          title: "A Study on Drone-Based Monostatic FMCW SAR System Configuration and Image Formation",
+          venue: "KIEES Summer Conference, Pyeongchang, Aug. 2024" },
+        { authors: "H.-D. Kim, I.-O. Choi, I.-H. Lee, M.-G. Cho, S.-C. Jeon, N.-W. Choi, K.-T. Kim",
+          title: "A Study on Low-Altitude Target Elevation Estimation in Maritime Environment Using Passive Radar",
+          venue: "KIEES Summer Conference, Pyeongchang, Aug. 2024", award: "IEEE GRSS Seoul Chapter Chair Award" },
+        { authors: "M.-G. Cho, I.-H. Lee, H.-D. Kim, O.-T. Jang, K.-T. Kim",
+          title: "A Study on Super-Resolution of SAR Images Based on Deep Learning",
+          venue: "KIEES Summer Conference, Pyeongchang, Aug. 2024" },
+      ],
+    },
+  ],
+
+  projects: [
+    // { title: "Project name", desc: "Short description", link: "" },
+  ],
+
+  awards: [
+    { title: "Excellent Paper Award (우수논문상)", sub: "KIEES Summer Conference 2025 — Scatterer-Aware Module-Based SAR Image Super-Resolution Network", date: "Aug. 2025" },
+    { title: "IEEE GRSS Seoul Chapter Chair Award", sub: "KIEES Summer Conference 2024 — A Study on Low-Altitude Target Elevation Estimation in Maritime Environment Using Passive Radar", date: "Aug. 2024" },
+  ],
+};
+</script>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top" id="brand"></a>
+    <ul id="nav-links"></ul>
+    <button class="theme-btn" id="theme-btn" aria-label="Toggle dark mode">◐</button>
+  </div>
+</nav>
+
+<main class="wrap" id="top">
+  <header class="hero">
+    <div id="avatar"></div>
+    <div>
+      <h1><span id="name"></span><span class="name-ko" id="name-ko"></span></h1>
+      <p class="role" id="role"></p>
+      <p class="affil" id="affil"></p>
+      <div class="links" id="links"></div>
+    </div>
+  </header>
+  <div id="sections"></div>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year"></span> <span id="foot-name"></span> · Last updated Oct 2026</div>
+</footer>
+
+<script>
+(() => {
+  const P = PROFILE;
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  const icons = {
+    email: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+    github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>',
+    scholar: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm-6 9.18v3.32L12 19l6-3.5v-3.32L12 15.5l-6-3.32Z"/></svg>',
+    linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.5h4V21H3V9.5Zm7 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.1c0-1.22-.02-2.78-1.7-2.78-1.7 0-1.96 1.33-1.96 2.7V21h-4V9.5Z"/></svg>',
+    cv: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>',
+  };
+  icons.lab = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/></svg>';
+  icons.orcid = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1a11 11 0 1 0 0 22 11 11 0 0 0 0-22ZM8.3 17.3H6.9V8.2h1.4v9.1Zm-.7-10.4a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8Zm3 10.4V8.2h3.4c3.2 0 4.7 2.3 4.7 4.6 0 2.5-2 4.6-4.7 4.6h-3.4Zm1.4-1.3h1.9c2.4 0 3.3-1.8 3.3-3.3 0-1.6-1-3.3-3.3-3.3H12V16Z"/></svg>';
+  const labels = { lab: "IRAS Lab", orcid: "ORCID", email: "Email", github: "GitHub", scholar: "Scholar", linkedin: "LinkedIn", cv: "CV" };
+
+  document.title = `${P.name} — ${P.affiliation.split(",").pop().trim()}`;
+  $("brand").textContent = P.name;
+  $("name").textContent = P.name;
+  $("name-ko").textContent = P.nameKo || "";
+  $("role").textContent = P.role;
+  $("affil").textContent = P.affiliation;
+  $("year").textContent = new Date().getFullYear();
+  $("foot-name").textContent = P.name;
+
+  const initials = P.name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+  $("avatar").outerHTML = P.photo
+    ? `<img class="avatar" src="${esc(P.photo)}" alt="${esc(P.name)}">`
+    : `<div class="avatar" aria-hidden="true">${esc(initials)}</div>`;
+
+  const allLinks = { email: P.email ? `mailto:${P.email}` : "", ...P.links };
+  $("links").innerHTML = Object.entries(allLinks)
+    .filter(([, url]) => url)
+    .map(([k, url]) => `<a href="${esc(url)}" ${k === "email" ? "" : 'target="_blank" rel="noopener"'}>${icons[k] || ""}${k === "email" ? esc(P.email) : labels[k] || k}</a>`)
+    .join("");
+
+  const timeline = (items) => `<ul class="plain timeline">${items.map((i) =>
+    `<li><span class="t">${esc(i.title)}</span><span class="d">${esc(i.date || "")}</span><span class="s">${esc(i.sub || "")}</span></li>`).join("")}</ul>`;
+
+  const sections = [
+    ["about", "About", P.about, (a) => `<div class="about">${a.map((p) => `<p>${esc(p)}</p>`).join("")}</div>`],
+    ["interests", "Research Interests", P.interests, (a) => `<div class="chips">${a.map((x) => `<span class="chip">${esc(x)}</span>`).join("")}</div>`],
+    ["news", "News", P.news, (a) => `<ul class="plain news">${a.map((n) => `<li><time>${esc(n.date)}</time><span>${esc(n.text)}</span></li>`).join("")}</ul>`],
+    ["education", "Education", P.education, timeline],
+    ["experience", "Experience", P.experience, timeline],
+    ["publications", "Publications", P.publications.filter((g) => g.items.length), (groups) => groups.map((g) =>
+      `<h3 class="pub-group">${esc(g.group)} <span>${g.items.length}</span></h3><ol class="plain pubs">${g.items.map((p) => {
+        const authors = esc(p.authors).split(esc(P.me)).join(`<b>${esc(P.me)}</b>`);
+        return `<li><div class="title">${p.link ? `<a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.title)}</a>` : esc(p.title)}</div><div class="authors">${authors}</div><div class="venue">${esc(p.venue)}${p.award ? ` <span class="tag">🏆 ${esc(p.award)}</span>` : ""}</div></li>`;
+      }).join("")}</ol>`).join("")],
+    ["projects", "Projects", P.projects, (a) => `<div class="projects">${a.map((p) =>
+      `<div class="card"><h3>${p.link ? `<a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.title)}</a>` : esc(p.title)}</h3><p>${esc(p.desc)}</p></div>`).join("")}</div>`],
+    ["awards", "Awards", P.awards, timeline],
+  ].filter(([, , data]) => data && data.length);
+
+  $("sections").innerHTML = sections.map(([id, title, data, render]) =>
+    `<section id="${id}"><h2>${title}</h2>${render(data)}</section>`).join("");
+  $("nav-links").innerHTML = sections.filter(([id]) => id !== "interests")
+    .map(([id, title]) => `<li><a href="#${id}">${title}</a></li>`).join("");
+
+  // theme toggle (remembered per browser)
+  const root = document.documentElement;
+  try { const t = localStorage.getItem("theme"); if (t) root.dataset.theme = t; } catch (e) {}
+  $("theme-btn").addEventListener("click", () => {
+    const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
